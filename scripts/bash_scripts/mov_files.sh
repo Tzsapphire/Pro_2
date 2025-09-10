@@ -12,7 +12,8 @@ TO_FOLDER="./movd_files"
 mkdir -p "$TO_FOLDER"
 
 #move files to the new folder (could be wrong)
- cp "$FROM_FOLDER"/*.csv "$FROM_FOLDER"/*.json "$TO_FOLDER"
+ mv "$FROM_FOLDER"/*.csv "$FROM_FOLDER"/*.json "$TO_FOLDER"
 
+#to copy files use
 # cp "$(pwd)"/*.csv "$(pwd)"/*.json "$(pwd)/path_folder"
 
