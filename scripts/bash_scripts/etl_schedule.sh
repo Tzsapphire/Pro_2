@@ -15,19 +15,26 @@ GOLD="gold"
 URL="https://www.stats.govt.nz/assets/Uploads/Annual-enterprise-survey/Annual-enterprise-survey-2023-financial-year-provisional/Download-data/annual-enterprise-survey-2023-financial-year-provisional.csv"
 
 #dowloading the file from the link, and save as the origin file name '-O'
-curl "$URL" -O ./$RAW
+curl  -O --output-dir "./$RAW" "$URL"
+#curl "$URL" -O ./$RAW
 #curl "$URL" -O ./raw/ 
 echo "saving file into $RAW folder"
 
 #changing the column_name , '-i' to edit files in place and save to the raw directory
-sed -i 's/Variable_code/variable_code/g' "$(pwd)"/$RAW/*.csv #still unable to create the raw folder
+sed -i 's/Variable_code/variable_code/g' "$(pwd)"/$RAW/*.csv 
+
+#need to put some 'if' controls to be sure file exists
 
 # selecting specific table columns; storoing in the transformed folder and renaming the file
-awk -F"," '{print $1, $5, $6, $9}' annual-enterprise-survey-2023-financial-year-provisional.csv > $TRANSFORMED/2023_year_finance.csv
+awk -F"," '{print $1, $5, $6, $9}' "$(pwd)/$RAW"/*.csv > $TRANSFORMED/2023_year_finance.csv
+
+#need to put some 'if' controls to catch the files before echo
 echo "loaded into $TRANSFORMED folder"
 
 # copy folder to gold load the directory into gold
 cp "$(pwd)/transformed/2023_year_finance.csv" "$(pwd)/gold/"
+
+#need to put some 'if' controls to catch the files before echo
 echo "loaded into $GOLD folder"
 
 
